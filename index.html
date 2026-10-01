@@ -1,40 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anniv26</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #111827 url("snowboard.png") center/cover no-repeat fixed;
-      color: #f9fafb;
-      text-align: center;
-    }
-    main {
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      color: #9ca3af;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ada &amp; Hanne — Anniversary Pass</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  body {
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(8px, 3vh, 24px) 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1b1f3b;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 10px);
+  }
+
+  .pass {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fdfbf4;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    color: #1b1f3b;
+  }
+
+  .stripe {
+    flex: 0 0 auto;
+    height: 14px;
+    background: repeating-linear-gradient(
+      -45deg,
+      #ff5252 0 14px,
+      #ffd23f 14px 28px,
+      #2ec4b6 28px 42px
+    );
+  }
+
+  .header {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(8px, 2vh, 14px) 20px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: clamp(12px, 2.6vh, 15px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .brand span { color: #ff5252; }
+  .pass-id {
+    font-family: "Courier New", monospace;
+    font-size: clamp(9px, 2vh, 11px);
+    color: #6b7094;
+  }
+
+  .photo-badge {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: clamp(6px, 1.8vh, 14px) 0;
+  }
+  .photo-circle {
+    position: relative;
+    width: clamp(80px, 24vh, 150px);
+    height: clamp(80px, 24vh, 150px);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #1b1f3b;
+    box-shadow: 0 0 0 4px #ffd23f;
+  }
+  .photo-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .snowflakes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .flake {
+    position: absolute;
+    top: -15%;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+    font-size: clamp(8px, 2.2vh, 13px);
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { top: -15%; opacity: 0; transform: translateX(0) rotate(0deg); }
+    10% { opacity: 1; }
+    100% { top: 110%; opacity: 0.3; transform: translateX(6px) rotate(180deg); }
+  }
+
+  .names {
+    flex: 0 0 auto;
+    text-align: center;
+    font-size: clamp(19px, 4.5vh, 26px);
+    font-weight: 800;
+    margin: 0 0 2px;
+  }
+  .names .amp { color: #ff5252; margin: 0 4px; }
+
+  .tagline {
+    flex: 0 0 auto;
+    text-align: center;
+    font-size: clamp(9px, 2vh, 12px);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #6b7094;
+    margin-bottom: clamp(8px, 2vh, 18px);
+  }
+
+  .perforation {
+    flex: 0 0 auto;
+    position: relative;
+    border-top: 2px dashed #cfd2e6;
+    margin: 0 20px;
+  }
+  .perforation::before, .perforation::after {
+    content: "";
+    position: absolute;
+    top: -11px;
+    width: 22px;
+    height: 22px;
+    background: #1b1f3b;
+    border-radius: 50%;
+  }
+  .perforation::before { left: -30px; }
+  .perforation::after { right: -30px; }
+
+  .fields {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(6px, 1.5vh, 14px);
+    padding: clamp(10px, 2.2vh, 20px) 20px;
+  }
+  .field-label {
+    font-family: "Courier New", monospace;
+    font-size: clamp(8px, 1.8vh, 10px);
+    letter-spacing: 1px;
+    color: #6b7094;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .field-value {
+    font-weight: 700;
+    font-size: clamp(12px, 2.6vh, 15px);
+  }
+  .field-value.full {
+    font-size: clamp(13px, 2.8vh, 16px);
+    line-height: 1.25;
+  }
+  .field-value.full .highlight {
+    color: #ff5252;
+  }
+  .span-2 { grid-column: span 2; }
+
+  .field-note {
+    font-size: clamp(8px, 1.6vh, 10px);
+    color: #9298b3;
+    margin-top: 2px;
+  }
+
+  .barcode-wrap {
+    flex: 0 0 auto;
+    padding: 0 20px clamp(10px, 2.2vh, 20px);
+    text-align: center;
+  }
+  .barcode {
+    height: clamp(26px, 6vh, 46px);
+    background: repeating-linear-gradient(
+      90deg,
+      #1b1f3b 0 2px,
+      transparent 2px 3px,
+      #1b1f3b 3px 4px,
+      transparent 4px 7px,
+      #1b1f3b 7px 10px,
+      transparent 10px 12px
+    );
+    margin-bottom: 6px;
+    border-radius: 2px;
+  }
+  .barcode-num {
+    font-family: "Courier New", monospace;
+    font-size: clamp(9px, 2vh, 11px);
+    letter-spacing: 3px;
+    color: #6b7094;
+  }
+
+  .valid-stamp {
+    position: absolute;
+    top: clamp(38px, 9vh, 50px);
+    right: 18px;
+    border: 3px solid #2ec4b6;
+    color: #2ec4b6;
+    font-weight: 800;
+    font-size: clamp(9px, 2vh, 11px);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transform: rotate(10deg);
+    opacity: 0.85;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <h1>Anniv26</h1>
-    <p>Hello, world!</p>
-  </main>
+  <div class="pass">
+    <div class="stripe"></div>
+    <div class="valid-stamp">Valid Forever</div>
+    <div class="header">
+      <div class="brand">Snow<span>world</span> Pass</div>
+      <div class="pass-id">NO. 000008</div>
+    </div>
+    <div class="photo-badge">
+      <div class="photo-circle">
+        <img src="snowboard.jpg" alt="Ada &amp; Hanne snowboarding">
+        <div class="snowflakes">
+          <span class="flake" style="left:8%; animation-duration:5s; animation-delay:0s;">❄</span>
+          <span class="flake" style="left:28%; animation-duration:6.5s; animation-delay:1s;">❅</span>
+          <span class="flake" style="left:50%; animation-duration:5.5s; animation-delay:2s;">❄</span>
+          <span class="flake" style="left:70%; animation-duration:7s; animation-delay:0.5s;">❅</span>
+          <span class="flake" style="left:88%; animation-duration:6s; animation-delay:1.5s;">❄</span>
+        </div>
+      </div>
+    </div>
+    <div class="names">Ada<span class="amp">&amp;</span>Hanne</div>
+    <div class="tagline">Official Anniversary Ticket</div>
+    <div class="perforation"></div>
+    <div class="fields">
+      <div>
+        <div class="field-label">Anniversary No.</div>
+        <div class="field-value">08</div>
+      </div>
+      <div>
+        <div class="field-label">Year</div>
+        <div class="field-value">2026</div>
+      </div>
+      <div class="span-2">
+        <div class="field-label">Activity</div>
+        <div class="field-value full">Snowboarding / skiing<br><span class="highlight">at Snowworld</span></div>
+        <div class="field-note">* with or without lesson</div>
+      </div>
+    </div>
+    <div class="barcode-wrap">
+      <div class="barcode"></div>
+      <div class="barcode-num">8 • YEARS • TOGETHER</div>
+    </div>
+  </div>
 </body>
 </html>
